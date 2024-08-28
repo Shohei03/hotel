@@ -1,0 +1,17 @@
+.table-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.table th {
+    background-color: #f8f9fa;
+}

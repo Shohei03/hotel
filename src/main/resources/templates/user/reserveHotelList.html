@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>予約一覧</title>
+    <th:block th:fragment="head">
+        <!-- 専用の CSS -->
+        <link rel="stylesheet" th:href="@{/css/reserveHotelList.css}">
+    </th:block>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <h1>ホテル予約一覧</h1>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#" th:href="@{/}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">ホテル予約一覧</li>
+            </ol>
+        </nav>
+        <table>
+            <thead>
+            <tr>
+                <th>民宿名</th>
+                <th>チェックイン日</th>
+                <th>チェックアウト日</th>
+                <th>宿泊人数</th>
+                <th>宿泊料金</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="payInfoListForm : ${payInfoListFormList}" th:object="${payInfoListForm}">
+                    <td th:text="*{hotelName}"></td>
+                    <td th:text="*{#dates.format(reserveDateFrom, 'yyyy/MM/dd')}"></td>
+                    <td th:text="*{#dates.format(reserveDateTo, 'yyyy/MM/dd')}"></td>
+                    <td th:text="*{guest_num}"></td>
+                    <td th:text="*{amount}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <a href="#" th:href="@{'/'}">Topページ</a>
+        </div>
+    </div>
+</body>
+</html>

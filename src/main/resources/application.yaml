@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: Hotel
+  profiles:
+    active: dev
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          no-cache: true
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+  messages:
+    basename: i18n/messages, i18n/ValidationMessages
+    fallback-to-system-locale: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password: 
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+  resources:
+    static-locations: classpath:/static/
+
+
+  #  session:
+#    store-type=redis
+#    timeout: 30m
+#    store-type: jdbc
+#    jdbc:
+#      initialize-schema: embedded
+#      table-name: SPRING_SESSION
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/hotelSite
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.example.Hotel.domain.top
+
+
+
+

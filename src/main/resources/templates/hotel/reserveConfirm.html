@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>ホテル予約ページ</title>
+    <th:block th:fragment="head">
+        <!-- 専用の CSS -->
+        <link rel="stylesheet" th:href="@{/css/reserveConfirm.css}">
+        <script th:src="@{/js/hotel/reserveConfirm.js}" defer></script>
+    </th:block>
+</head>
+
+<body>
+    <div layout:fragment="content" class="mt-4">
+        <div class="table-container">
+            <h2 class="text-center">予約内容確認</h2>
+            <form  action="#" th:action="@{/pay}" method="post" th:object="${reserveForm}">
+                <table class="table mt-3">
+                    <tr>
+                        <th>チェックイン日</th>
+                        <td th:text="*{#dates.format(checkin_date, 'yyyy/MM/dd')}"></td>
+                    </tr>
+                    <tr>
+                        <th>チェックアウト日</th>
+                        <td th:text="*{#dates.format(checkout_date, 'yyyy/MM/dd')}"></td>
+                    </tr>
+                    <tr>
+                        <th>宿泊人数</th>
+                        <td th:text="*{guestNum}"></td>
+                    </tr>
+                    <tr>
+                        <th>1泊あたりの宿泊料金</th>
+                        <td th:text="${hotel.price} + '円'"></td>
+                    </tr>
+                    <tr>
+                        <th>宿泊費合計</th>
+                        <td th:text="*{totalPrice} + '円'"></td>
+                    </tr>
+                </table>
+                <div class="d-grid d-md-flex justify-content-md-end">
+                    <input type="submit" value="決済する" class="btn btn-primary w-30 mt-3">
+                </div>
+            </form>
+        </div>
+        <div class="table-container mt-5"
+             th:if="${payInfoListFormList != null && !payInfoListFormList.isEmpty()}">
+            <!-- メッセージ -->
+            <div class="alert alert-warning" role="alert">
+                <div>予約された日程にて、既に以下予約されています</div>
+            </div>
+            <div>
+                <table class="table mt-3">
+                    <thead>
+                    <tr>
+                        <th>民宿名</th>
+                        <th>チェックイン日</th>
+                        <th>チェックアウト日</th>
+                        <th>宿泊人数</th>
+                        <th>宿泊料金</th>
+                        <th>キャンセル</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="payInfoListForm : ${payInfoListFormList}" th:object="${payInfoListForm}">
+                        <td th:text="*{hotelName}"></td>
+                        <td th:text="*{#dates.format(reserveDateFrom, 'yyyy/MM/dd')}"></td>
+                        <td th:text="*{#dates.format(reserveDateTo, 'yyyy/MM/dd')}"></td>
+                        <td th:text="*{guest_num}"></td>
+                        <td th:text="*{amount}"></td>
+                        <td>
+                            <a href="#" th:href="@{'/cancel/' + *{id}}" onclick="confirmCancel(event)">キャンセル</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

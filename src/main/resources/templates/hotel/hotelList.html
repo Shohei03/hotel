@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>ホテル一覧ページ</title>
+    <th:block th:fragment="head">
+        <!-- 専用 -->
+        <link rel="stylesheet" th:href="@{/css/hotelList.css}">
+        <script th:src="@{/js/hotel/hotelList.js}" defer></script>
+    </th:block>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="hotel_container">
+            <div class="search-item">
+                <div class="search-form1">
+                    <form action="#" th:action="@{/search}" method="get" th:object="${searchKeyword}">
+                        <div>
+                            <label for="keyword"></label>
+                            <input type="text" id="keyword" name="keyword" th:value="*{keyword}">
+                        </div>
+                        <div class="mt-3">
+                            <label for="area">エリアから探す</label>
+                            <select id="area" name="area" th:field="*{area}">
+                                <option value="">選択してください</option>
+                                <option value="北海道">北海道</option>
+                                <option value="東京都">東京都</option>
+                                <option value="神奈川県">神奈川県</option>
+                                <option value="長野県">長野県</option>
+                                <option value="愛知県">愛知県</option>
+                                <option value="静岡県">静岡県</option>
+                                <option value="大阪府">大阪府</option>
+                                <option value="京都府">京都府</option>
+                                <option value="福岡県">福岡県</option>
+                                <option value="沖縄県">沖縄県</option>
+                            </select>
+                        </div>
+                        <div class="mt-3">
+                            <label for="budget_lower">1泊あたりの予算</label>
+                            <select id="budget_lower" name="budget_lower" th:field="*{budget_lower}">
+                                <option value="0">0</option>
+                                <option value="3000">3000</option>
+                                <option value="5000">5000</option>
+                                <option value="10000">10000</option>
+                                <option value="30000">30000</option>
+                            </select>円～
+                            <label for="budget_upper"></label>
+                            <select id="budget_upper" name="budget_upper" th:field="*{budget_upper}">
+                                <option value="3000">3000</option>
+                                <option value="5000">5000</option>
+                                <option value="10000">10000</option>
+                                <option value="30000" selected>30000</option>
+                                <option value="9999999">--</option>
+                            </select>円
+                        </div>
+                        <input type="hidden" id="orderKey" name="orderKey" th:value="${orderKey}">
+                        <input type="submit" value="検索" class="mt-3"><br>
+                    </form>
+                </div>
+            </div>
+            <div class="hotel-search-result">
+                <div class="result_for_condition">
+                    <div class="result_count">
+                        <span>検索結果</span>
+                    </div>
+
+                    <div class="select_order">
+                        <label for="orderitem"></label>
+                        <select id="orderitem" name="orderitem" th:value="${orderitem}">
+                            <option value="name">ホテル名</option>
+                            <option value="price">金額</option>
+                        </select>
+                        <button id="select_button" type="button" value="並び替え" class="btn btn-primary ml-3">並び替え</button>
+                    </div>
+
+                </div>
+                <div id="hotel-item" class="hotel-item" th:each="hotel : ${page} " th:object="${hotel}">
+                    <div class="hotel-picture">
+                        <img th:src="@{'/images/' + *{hotelPicture}}" alt="Hotel Image">
+                    </div>
+                    <div class="hotel_detail">
+                        <div class="hotel_name">
+                            <p th:text="*{name}">ホテルの名前</p>
+                        </div>
+                        <div class="hotel_description">
+                            <p th:text="*{description}">ホテルの説明</p>
+                        </div>
+                        <div class="hotel_address">
+                            <p th:text="*{address} + ' ' + *{prefecture} + *{city}">ホテルの説明</p>
+                            <p th:text="*{price} + '円/泊'"></p>
+                        </div>
+                    </div>
+                </div>
+                <th:block th:insert="~{layout/pagination :: pagination}">
+                </th:block>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

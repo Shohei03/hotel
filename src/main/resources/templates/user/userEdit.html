@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>会員情報画面</title>
+    <th:block th:fragment="head">
+        <!-- 専用の CSS -->
+        <link rel="stylesheet" th:href="@{/css/userEdit.css}">
+    </th:block>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <h2 >会員情報</h2>
+        <div layout:replace="~{user/userInputForm::form(actionUrl='/user/editPost')}"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+h2 {
+    text-align:center;
+}
+
+.hotel_image {
+    text-align:center;
+}
+
+.hotel_image img {
+    width: 60%;
+    height: auto;
+}
+
+.container {
+    display: flex;
+}
+
+
+.table-container {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.form-container {
+    flex: 1;
+    border: 1px solid #000000;
+}
+
+
+#photos li img {
+    width: 500px;
+    border: 1px solid #000;
+    margin: 0px;
+    padding: 0px;
+}
+
+#photo-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#photos-wrapper {
+    width: 500px; /* 写真1枚分の幅 */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+#photos {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transition: margin-left 0.3s ease; /* スムーズなアニメーション */
+}
+
+#photos li {
+    width: 100%;     /* 親要素の幅に合わせる */
+    max-width: 500px; /* 画像の最大幅を設定 */
+    max-height: 300px;
+    height: auto;    /* アスペクト比を維持しながら高さを自動調整 */
+    object-fit: cover; /* 画像を中央でトリミングして均等に表示 */
+    flex-shrink: 0; /* アイテムの縮小を防ぐ */
+}
+
+button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+#parent-photo-container {
+    display: flex;
+    justify-content: center; /* 水平方向の中央揃え */
+}

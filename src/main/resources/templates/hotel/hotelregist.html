@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>ホテル登録画面</title>
+    <th:block th:fragment="head">
+        <!-- 専用の CSS -->
+        <style>
+            .no-break {
+                display: inline-block; /* または inline */
+            }
+        </style>
+    </th:block>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <h1>ホテル登録</h1>
+        <form method="POST" class="ml-4" th:action="@{/hotel/register}" enctype="multipart/form-data" action="#" th:object="${hotelForm}">
+            <div layout:replace="~{hotel/hotelInputForm::contents}"></div>
+            <input type="submit" th:value="登録">
+        </form>
+    </div>
+</body>
+</html>

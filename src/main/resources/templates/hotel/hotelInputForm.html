@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{hotel/hotelInputForm.html}" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>旅館登録・編集画面</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div layout:fragment="contents">
+        <div class="form-group">
+            <label for="name" >ホテル名</label><br>
+            <input type="text"  class="form-control col-lg-6" id="name" th:field="*{name}" th:errorclass="is-invalid"/><br>
+            <div class="invalid-feedback" th:errors="*{name}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="description">説明</label>
+            <input type="text" class="form-control col-lg-6" id="description" name="description" th:field="*{description}" th:errorclass="is-invalid"/><br>
+            <div class="invalid-feedback" th:errors="*{description}"></div>
+        </div>
+
+        <label for="picture">ホテル写真</label><br>
+        <input type="file" id="picture" name="picture"><br>
+
+        <label for="picture2">ホテル写真2</label><br>
+        <input type="file" id="picture2" name="picture2"><br>
+
+        <label for="picture3">ホテル写真3</label><br>
+        <input type="file" id="picture3" name="picture3"><br>
+
+        <div class="form-group">
+            <label for="price">宿泊料金（1泊）</label>
+            <input type="text" class="form-control col-lg-6" id="price" name="price" th:field="*{price}" th:errorclass="is-invalid"/><br>
+            <div class="invalid-feedback" th:errors="*{price}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="address">郵便番号</label>
+            <input type="text" class="form-control col-lg-6" id="address" name="address" th:field="*{address}" th:errorclass="is-invalid"/><br>
+            <div class="invalid-feedback" th:errors="*{address}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="prefecture">住所</label>
+            <input type="text" class="form-control col-lg-1 no-break" id="prefecture" name="prefecture" th:field="*{prefecture}"  th:errorclass="is-invalid"/>県
+
+            <label for="city"></label>
+            <input type="text" class="form-control col-lg-1 no-break" id="city" name="city" th:field="*{city}" th:errorclass="is-invalid"/>市
+
+            <label for="otherParts"></label>
+            <input type="text" class="form-control col-lg-4 no-break" id="otherParts" name="otherParts" th:field="*{otherParts}" th:errorclass="is-invalid"/><br>
+            <div class="invalid-feedback" th:errors="*{prefecture}"></div>
+            <div class="invalid-feedback" th:errors="*{city}"></div>
+            <div class="invalid-feedback" th:errors="*{otherParts}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNumber">電話番号：</label>
+            <input type="text" class="form-control col-lg-6" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" th:errorclass="is-invalid"/><br>
+            <div class="invalid-feedback" th:errors="*{phoneNumber}"></div>
+        </div>
+    </div>
+
+</body>
+</html>

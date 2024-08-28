@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>会員一覧ページ</title>
+    <th:block th:fragment="head">
+        <!-- 専用の CSS -->
+        <link rel="stylesheet" href="//cdn.datatables.net/2.1.4/css/dataTables.dataTables.min.css"/>
+        <script src="//cdn.datatables.net/2.1.4/js/dataTables.min.js" defer></script>
+        <script th:src="@{/js/hotel/list.js}" defer></script>
+    </th:block>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <!-- 検索機能 -->
+        <div class="mb-4 container">
+            <form id="user-search-form" class="form-inline" method="post" th:action="@{/user/list}" th:object="${userForm}">
+                <label for="name" class="mr-2 h4">ユーザー検索</label>
+                <input type="text" class="form-control w-50" id="name" th:field="*{name}"/>
+                <button id="btn-search" class="btn btn-primary ml-3 mt-1" type="button">
+                    検索（REST）
+                </button>
+            </form>
+        </div>
+    <!--    <table th:if="${page.totalPages > 0}" class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>氏名</th>
+                    <th>フリガナ</th>
+                    <th>メールアドレス</th>
+                    <th>詳細</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${page}" th:object="${user}">
+                    <td th:text="*{id}"></td>
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{nameKana}"></td>
+                    <td th:text="*{mail}"></td>
+                    <td class="py-1">
+                        <a th:href="@{/user/edit/{id}(id=*{id})}"
+                           class="btn btn-outline-primary">
+                            <i class="fa fa-pencil"></i>
+                            詳細
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+               <th:block th:insert="~{layout/user_pagination :: pagination}">
+               </th:block>-->
+
+        <!-- 一覧表示-->
+        <div class="container">
+            <div class="row justify-content-center">
+                <table id="user-list-table" class="table table-striped table-bordered table-hover w-100">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="th-width">ID</th>
+                            <th class="th-width">氏名</th>
+                            <th class="th-width">フリガナ</th>
+                            <th class="th-width">メールアドレス</th>
+                            <th class="th-width">詳細</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

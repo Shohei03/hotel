@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{index.html}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<header class="header_container" layout:fragment="header">
+    <script th:src="@{/js/hotel/header.js}" defer></script>
+
+        <a th:href="@{/}">
+            <div class="header_item1">SAMURAI Travel</div>
+        </a>
+        <div class="hamburger">
+            <!-- ハンバーガーメニューの線 -->
+            <span></span>
+            <span></span>
+            <span></span>
+            <!-- /ハンバーガーメニューの線 -->
+        </div>
+    <ul class="slide-menu">
+        <li class="header_main_item">
+            <a sec:authorize="!isAuthenticated()" class="header_item2" href="#" th:href="@{/user/login}">ログイン</a>
+            <a sec:authorize="isAuthenticated()" class="header_item2" href="#" th:href="@{/logout}">ログアウト</a>
+        </li>
+        <li>
+            <p class="header_main_item">会員情報</p>
+            <ul>
+                <li><a class="header_item2" href="#" th:href="@{'/user/signup'}">会員登録</a></li>
+                <li><a sec:authorize="isAuthenticated()" class="header_item2" href="#" th:href="@{'/user/detail'}">会員詳細</a></li>
+                <li><a sec:authorize="hasAuthority('ADMIN')" class="header_item2" href="#" th:href="@{'/user/list'}">会員一覧</a></li>
+            </ul>
+        </li>
+        <li>
+            <p sec:authorize="isAuthenticated()" class="header_main_item">旅館情報</p>
+            <ul>
+                <li><a sec:authorize="isAuthenticated()" class="header_item2" href="#" th:href="@{'/reserveList'}">予約一覧</a></li>
+                <li ><a sec:authorize="hasAuthority('ADMIN')" class="header_item2" href="#" th:href="@{'/hotel/register'}">登録</a></li>
+                <li ><a sec:authorize="hasAuthority('ADMIN')" class="header_item2" href="#" th:href="@{'/hotel/infoList'}">登録一覧</a></li>
+            </ul>
+        </li>
+    </ul>
+</header>
+</body>
+</html>

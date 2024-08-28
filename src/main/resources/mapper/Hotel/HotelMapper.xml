@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング-->
+<mapper namespace="com.example.Hotel.domain.top.HotelRepository">
+
+<!--　マッピング定義（ホテル） -->
+<resultMap type="com.example.Hotel.domain.top.HotelEntity" id="hotel">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="description" column="description"/>
+    <result property="address" column="address"/>
+    <result property="prefecture" column="prefecture"/>
+    <result property="city" column="city"/>
+    <result property="otherParts" column="other_parts"/>
+    <result property="phoneNumber" column="phone_number"/>
+    <result property="hotelPicture" column="hotel_picture"/>
+    <result property="price" column="price"/>
+    <result property="registDate" column="regist_date"/>
+    <result property="updateDate" column="update_date"/>
+    <result property="hotelPicture2" column="hotel_picture2"/>
+    <result property="hotelPicture3" column="hotel_picture3"/>
+    <result property="hotelPicture4" column="hotel_picture4"/>
+</resultMap>
+
+
+    <select id="findAll" resultType="HotelEntity">
+        select *
+        from
+        hotel
+        order by
+        regist_date DESC;
+    </select>
+
+    <!-- Topページ用ホテル情報取得-->
+    <select id="findTopInfo" resultType="HotelEntity">
+        select *
+        from
+        hotel
+        order by
+        regist_date DESC
+        LIMIT 10;
+    </select>
+
+    <select id="findById" resultType="HotelEntity" resultMap="hotel">
+        select
+            *
+        from
+            hotel
+        where
+            id = #{id}
+    </select>
+
+    <select id="findHotelNameById" resultType="String">
+        select
+            name
+        from
+            hotel
+        where
+            id = #{id}
+    </select>
+
+    <select id="findHotelByName" resultType="HotelEntity" resultMap="hotel">
+        select
+            *
+        from
+            hotel
+        where
+            name like CONCAT('%', #{name}, '%')
+    </select>
+
+    <select id="findHotelByNamePaging" resultType="HotelEntity" resultMap="hotel">
+        select
+            *
+        from
+            hotel
+        where
+            name like CONCAT('%', #{name}, '%')
+    </select>
+
+    <select id="findHotelBySearchKeyPaging" resultType="HotelEntity" resultMap="hotel">
+        select
+            *
+        from
+            hotel
+        <where>
+            <!-- 条件の開始-->
+            <if test="searchKeyword.keyword != null and searchKeyword.keyword != ''">
+                name like CONCAT('%', #{searchKeyword.keyword}, '%')
+            </if>
+            <if test="searchKeyword.area != null and searchKeyword.area != ''">
+                AND prefecture = #{searchKeyword.area}
+            </if>
+            <if test="searchKeyword.budget_lower != null">
+                AND price >= #{searchKeyword.budget_lower}
+            </if>
+            <if test="searchKeyword.budget_upper != null">
+                AND #{searchKeyword.budget_upper} >= price
+            </if>
+        </where>
+        <if test="orderitem != null and orderitem != ''">
+            order by ${orderitem}
+        </if>
+    </select>
+
+    <select id="findHotelBySearchKeyByOrderPaging" resultType="HotelEntity" resultMap="hotel">
+        select
+        *
+        from
+        hotel
+        <where>
+            <!-- 条件の開始-->
+            <if test="searchKeyword.keyword != null and searchKeyword.keyword != ''">
+                name like CONCAT('%', #{searchKeyword.keyword}, '%')
+            </if>
+            <if test="searchKeyword.area != null and searchKeyword.area != ''">
+                AND prefecture = #{searchKeyword.area}
+            </if>
+            <if test="searchKeyword.budget_lower != null">
+                AND price >= #{searchKeyword.budget_lower}
+            </if>
+            <if test="searchKeyword.budget_upper != null">
+                AND #{searchKeyword.budget_upper} >= price
+            </if>
+        </where>
+        order by ${orderItem}
+    </select>
+
+
+    <select id="findHotelByNameByOrder" resultType="HotelEntity">
+        select
+        *
+        from
+        hotel
+        where
+        name like CONCAT('%', #{name}, '%')
+         order by ${orderItem}
+    </select>
+
+    <select id="findHotelByNameByOrderPaging" resultType="HotelEntity">
+        select
+            *
+        from
+            hotel
+        where
+            name like CONCAT('%', #{name}, '%')
+        order by ${orderItem}
+    </select>
+
+
+    <select id="findHotelByArea" resultType="HotelEntity" resultMap="hotel">
+        select
+        *
+        from
+        hotel
+        where
+        prefecture = #{area};
+    </select>
+
+    <select id="findHotelByBudget" resultType="HotelEntity" resultMap="hotel">
+        select
+        *
+        from
+        hotel
+        where
+        price between #{budget_lower} and #{budget_upper};
+    </select>
+
+    <select id="getCountByword" resultType="int">
+        select
+            count(id)
+        from
+            hotel
+        <where>
+            <!-- 条件の開始-->
+            <if test="key == 1">
+                AND name like CONCAT('%', #{word}, '%')
+            </if>
+            <if test="key == 2">
+                AND prefecture = #{word}
+            </if>
+        </where>
+    </select>
+
+    <select id="getCountBySearchword" resultType="int">
+        select
+            count(id)
+        from
+            hotel
+        <where>
+            <!-- 条件の開始-->
+            <if test="searchKeyword.keyword != null and searchKeyword.keyword != ''">
+                name like CONCAT('%', #{searchKeyword.keyword}, '%')
+            </if>
+            <if test="searchKeyword.area != null and searchKeyword.area != ''">
+                AND prefecture = #{searchKeyword.area}
+            </if>
+            <if test="searchKeyword.budget_lower != null">
+                AND price >= #{searchKeyword.budget_lower}
+            </if>
+            <if test="searchKeyword.budget_upper != null">
+                AND #{searchKeyword.budget_upper} >= price
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAll" parameterType="HotelEntity" resultMap="hotel">
+        select * from hotel;
+    </select>
+
+    <select id="count" parameterType="long">
+        select COUNT(*) from hotel;
+    </select>
+
+    <select id="getCountByBudget" resultType="int">
+        select
+            count(id)
+        from
+            hotel
+        <where>
+            <!-- 条件の開始-->
+            <if test="budget_lower != null">
+                AND price >= #{budget_lower}
+            </if>
+            <if test="budget_upper != null">
+                AND #{budget_upper} >= price
+            </if>
+        </where>
+    </select>
+
+    <delete id="delete" >
+        DELETE FROM hotel WHERE id = #{id};
+    </delete>
+
+
+    <insert id="insert">
+        INSERT INTO hotel (
+            name,
+            description,
+            address,
+            prefecture,
+            city,
+            other_parts,
+            phone_number,
+            hotel_picture,
+            price,
+            regist_date,
+            hotel_picture2,
+            hotel_picture3
+        ) VALUES (
+            #{name},
+            #{description},
+            #{address},
+            #{prefecture},
+            #{city},
+            #{otherParts},
+            #{phoneNumber},
+            #{hotelPicture},
+            #{price},
+            CURRENT_TIMESTAMP,
+            <if test="hotelPicture2 != null and hotelPicture2 != '' ">
+                #{hotelPicture2},
+            </if>
+            #{hotelPicture3}
+        );
+    </insert>
+
+    <update id="update">
+        UPDATE
+            hotel
+        SET
+        <if test="name != null">
+            name = #{name},
+        </if>
+        <if test="description != null">
+            description = #{description},
+        </if>
+        <if test="address != null">
+            address = #{address},
+        </if>
+        <if test="prefecture != null">
+            prefecture = #{prefecture},
+        </if>
+        <if test="city != null">
+            city = #{city},
+        </if>
+        <if test="otherParts != null">
+            other_parts = #{otherParts},
+        </if>
+        <if test="phoneNumber != null">
+            phone_number = #{phoneNumber},
+        </if>
+        <if test="hotelPicture != null">
+            hotel_picture = #{hotelPicture},
+        </if>
+        <if test="price != null">
+            price = #{price},
+        </if>
+        update_date = CURRENT_TIMESTAMP
+    Where
+        id = #{id}
+    </update>
+
+</mapper>

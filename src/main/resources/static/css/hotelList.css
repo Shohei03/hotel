@@ -1,0 +1,65 @@
+.hotel_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.search-item {
+    width: 35%;
+}
+
+.hotel-search-result {
+    width: 60%;
+    padding: 0px;
+
+}
+
+.search-item {
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.hotel-search-result .hotel-item {
+    border: 1px solid;
+    list-style-type: none;
+    padding: 0;
+}
+
+.hotel-item {
+    display: flex; /* Flexboxを使ってレイアウトを整える */
+    flex-wrap: wrap; /* 画面サイズに応じて要素を折り返す */
+    padding: 10px;
+}
+
+.hotel-picture {
+    flex: 1 1 300px; /* 写真部分の幅を300pxに設定し、必要に応じて拡張 */
+    margin-right: 15px; /* 写真と説明の間にマージンを設定 */
+}
+
+.hotel-picture img {
+    max-width: 100%; /* 画像が親要素を超えないようにする */
+    height: auto; /* 画像のアスペクト比を保つ */
+    width: 300px;
+    max-height: 180px; /* 高さを180pxに制限 */
+    object-fit: cover; /* 中央を基準に切り取る */
+    overflow: hidden;  /* 溢れた部分を隠す */
+}
+
+.hotel_detail {
+    flex: 2 1 400px; /* 説明部分の幅を400pxに設定し、必要に応じて拡張 */
+}
+
+.result_for_condition{
+    display: flex;
+    justify-content: space-between;
+}
+
+. result_count {
+    width: 30%;
+}
+
+
+.select_order {
+    margin: aut;
+}

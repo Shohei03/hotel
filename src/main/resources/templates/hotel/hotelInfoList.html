@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>ホテル一覧ページ</title>
+    <th:block th:fragment="head">
+        <!-- 専用 -->
+        <link rel="stylesheet" href="//cdn.datatables.net/2.1.4/css/dataTables.dataTables.min.css"/>
+        <script src="//cdn.datatables.net/2.1.4/js/dataTables.min.js" defer></script>
+        <script th:src="@{/js/hotel/list_hotel.js}" defer></script>
+    </th:block>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <!-- メッセージ -->
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <div th:text="${successMessage}"></div>
+        </div>
+        <div class="container mt-5" >
+            <div class="process_container">
+                <div class="mb-4">
+                    <form id="hotel-search-form" method="post" th:action="@{/hotel/infoList}"
+                          class="form-inline">
+                        <label for="hotel_name" class="mr-2 h4">ホテル検索</label>
+                        <input type="text" class="form-control w-50" id="hotel_name" th:value="*{hotel_name}"/>
+                        <button id="btn-search" class="btn btn-primary ml-3" type="button">
+                            検索（REST）
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <form method="GET" th:action="@{/hotel/register}">
+                    <input type="submit" value="登録"/>
+                    </form>
+                </div>
+            </div>
+            <!-- 一覧表示-->
+            <div>
+                <table id="hotel-list-table" class="table table-striped table-bordered table-hover w-100">
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="th-width">id</th>
+                        <th class="th-width">民宿名</th>
+                        <th class="th-width">郵便番号</th>
+                        <th class="th-width">住所</th>
+                        <th class="th-width">電話番号</th>
+                        <th class="th-width">#</th>
+                        <th class="th-width">#</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

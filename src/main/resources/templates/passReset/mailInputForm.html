@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>main_input_page</title>
+</head>
+<body>
+    <p>下記入力のメールアドレスに、パスワード変更用リンクを送りますので記載お願いします。</p>
+    <form action="#" th:action="@{/request-password-reset}" method="post">
+        <label for="email">メールアドレス</label>
+        <input type="text" name="email" id="email" th:value="${email}"/>
+        <button type="submit">送信</button>
+    </form>
+</body>
+</html>

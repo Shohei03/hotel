@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>会員編集ページ</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <h1>会員編集</h1>
+        <form action="#" th:action="@{/user/modify}" method="post" th:object="${userForm}">
+            <label for="name">名前：</label>
+            <input type="text" id="name" name="name" th:field="*{name}" required><br>
+
+            <label for="name_kana">名前（フリガナ）：</label>
+            <input type="text" id="name_kana" name="name_kana" th:field="*{nameKana}" required><br>
+
+            <label for="password">パスワード：</label>
+            <input type="password" id="password" name="password" th:field="*{password}" required><br>
+
+            <label for="post">郵便番号：</label>
+            <input type="text" id="post" name="post" th:field="*{post}"><br>
+
+            <label for="address">住所：</label>
+            <input type="text" id="address" name="address" th:field="*{address}"><br>
+
+            <label for="tel">電話番号：</label>
+            <input type="tel" id="tel" name="tel" th:field="*{tel}"><br>
+
+            <label for="mail">メールアドレス：</label>
+            <input type="email" id="mail" name="mail" th:field="*{mail}"><br>
+
+            <div th:sec:authorize="hasAuthority('ADMIN')">
+                <label for="authority">権限:</label>
+                <select id="authority" name="authority" th:field="*{authority}">
+                    <option th:value="USER">USER</option>
+                    <option th:value="ADMIN">ADMIN</option>
+                </select>
+            </div>
+
+            <input type="submit" value="登録">
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング-->
+<mapper namespace="com.example.Hotel.domain.auth.UserMapper">
+
+
+    <!--　マッピング定義（ユーザ） --><!--　マッピング定義（ホテル） -->
+    <resultMap type="com.example.Hotel.domain.auth.UserMapper" id="user">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="nameKana" column="name_kana"/>
+        <result property="password" column="password"/>
+        <result property="post" column="post"/>
+        <result property="address" column="address"/>
+        <result property="tel" column="tel"/>
+        <result property="mail" column="mail"/>
+        <result property="authority" column="authority"/>
+    </resultMap>
+
+    <select id="findUser" resultType="com.example.Hotel.domain.auth.UserEntity">
+        select
+            *
+        from
+            users
+        where
+            name = #{userName}
+    </select>
+
+    <select id="findByEmail" resultType="com.example.Hotel.domain.auth.UserEntity">
+        select
+            *
+        from
+            users
+        where
+            mail = #{mail}
+    </select>
+
+    <select id="findByResetToken" resultType="com.example.Hotel.domain.auth.UserEntity">
+        select
+            *
+        from
+            users
+        where
+            resetToken = #{resetToken}
+    </select>
+
+
+    <select id="findUsers" resultType="com.example.Hotel.domain.auth.UserEntity">
+        select
+            *
+        from
+            users
+        where
+            name like CONCAT('%', #{userName}, '%')
+    </select>
+
+
+    <select id="findAllUser" resultType="com.example.Hotel.domain.auth.UserEntity">
+        select
+            *
+        from
+            users
+    </select>
+
+    <select id="findUserId" resultType="com.example.Hotel.domain.auth.UserEntity">
+        select
+        *
+        from
+            users
+        where id = #{id}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select
+            COUNT(*)
+        from
+            users
+    </select>
+
+
+    <insert id="insertOne">
+        INSERT INTO users (
+            name,
+            name_kana,
+            password,
+            post,
+            address,
+            tel,
+            mail,
+            authority
+        )
+        values (
+            #{name},
+            #{nameKana},
+            #{password},
+            #{post},
+            #{address},
+            #{tel},
+            #{mail},
+            #{authority}
+        )
+    </insert>
+
+    <update id="updateUserInfo">
+        UPDATE
+            users
+        SET
+            name      = #{name},
+            name_kana = #{nameKana},
+            password  = #{password},
+            post      = #{post},
+            address   = #{address},
+            tel       = #{tel},
+            mail      = #{mail},
+
+            authority = #{authority}
+
+        WHERE
+            id = #{id}
+    </update>
+
+    <update id="updateUser">
+    UPDATE
+    users
+    SET
+    name      = #{user.name},
+    name_kana = #{user.nameKana},
+    password  = #{user.password},
+    post      = #{user.post},
+    address   = #{user.address},
+    tel       = #{user.tel},
+    mail      = #{user.mail}
+    WHERE id = #{user_id}
+    </update>
+
+
+    <update id="updateRole">
+        UPDATE
+            users
+        SET
+            authority = #{authority}
+        WHERE
+            id = #{user_id}
+    </update>
+
+    <update id="updateToken">
+        UPDATE
+            users
+        SET
+            resetToken = #{resetToken}
+        WHERE
+            id = #{id}
+    </update>
+
+    <update id="updatePassword">
+        UPDATE
+            users
+        SET
+            resetToken = #{resetToken},
+            password   = #{password}
+        WHERE
+            id = #{id}
+    </update>
+
+
+
+
+</mapper>

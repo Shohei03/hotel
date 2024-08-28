@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>ホテル詳細ページ</title>
+    <th:block th:fragment="head">
+        <!-- 専用の CSS -->
+        <link rel="stylesheet" th:href="@{/css/hotelDetailInfo.css}">
+    </th:block>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <h2 th:text="${hotelDetailForm.name}">（ホテル名）</h2>
+
+        <div class="container mt-5" >
+            <div class="table-container">
+                <table class="table" th:object="${hotelDetailForm}">
+                    <tr>
+                        <th>民宿名</th>
+                        <td th:text="*{name}"></td>
+                    </tr>
+                    <tr>
+                        <th>説明</th>
+                        <td th:text="*{description}"></td>
+                    </tr>
+                    <tr>
+                        <th>宿泊料金</th>
+                        <td th:text="*{price} + '円'"></td>
+                    </tr>
+                    <tr>
+                        <th>郵便番号</th>
+                        <td th:text="*{address}"></td>
+                    </tr>
+                    <tr>
+                        <th>住所</th>
+                        <td th:text="*{fullAddress}"></td>
+                    </tr>
+                    <tr>
+                        <th>電話番号</th>
+                        <td th:text="*{phoneNumber}"></td>
+                    </tr>
+                </table>
+            </div>
+            <form method="post" th:action="@{/hotel/delete}">
+                <input type="hidden" name="id" th:value="${id}"/>
+                <input type="submit" id="del" name="del" value="削除">
+            </form>
+            <form method="get" th:action="@{/hotel/infoChange}">
+                <input type="hidden" name="id" th:value="${id}"/>
+                <input type="submit" value="編集">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

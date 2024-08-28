@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <title>Topページ</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <!-- 検索機能 -->
+    <form  action="#" th:action="@{/search}" method="get">
+        <div class="searchHotel mt-3">
+            <label  for="search">ホテルを検索：</label>
+            <input type="text" id="search" name="keyword" th:value="${keyword}">
+            <button type="submit">検索</button>
+        </div>
+    </form>
+
+    <div class="new-photos">
+        <h2>新着</h2>
+    </div>
+
+    <!-- ホテルの写真 -->
+    <div class="photo-grid">
+        <div class="photo-grid-item" th:each="hotel : ${hotelList}">
+            <div class="hotel-photo">
+                <a th:href="@{'/detail/' + ${hotel.id}}">
+                    <img th:src="@{'/images/' + ${hotel.hotelPicture} + '?version=' + ${imageVersion}}" alt="Hotel Image">
+                </a>
+            </div>
+            <div class="hotel-info">
+                <p th:text="${hotel.name}">ホテルの名前</p>
+            </div>
+            <div class="hotel-info">
+                <p th:text="${hotel.prefecture} + ${hotel.city} + ${hotel.otherParts}">ホテルの住所</p>
+            </div>
+            <div class="hotel-info">
+                <p th:text="${hotel.price} + '円/泊'">ホテルの住所</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

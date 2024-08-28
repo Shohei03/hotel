@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング-->
+<mapper namespace="com.example.Hotel.domain.payment.PayMapper">
+
+    <!--　マッピング定義（ユーザ） --><!--　マッピング定義（ホテル） -->
+    <resultMap type="com.example.Hotel.domain.payment.PaymentInfoEntity" id="pay">
+        <id property="id" column="id"/>
+        <result property="payDate" column="pay_date"/>
+        <result property="reserveDateFrom" column="reserve_date_from"/>
+        <result property="reserveDateTo" column="reserve_date_to"/>
+        <result property="amount" column="amount"/>
+        <result property="guestNum" column="guest_num"/>
+        <association property="hotel" resultMap="m_hotel"/>
+        <association property="user" resultMap="user"/>
+    </resultMap>
+
+    <!--　マッピング定義（ホテル） -->
+    <resultMap type="com.example.Hotel.domain.top.HotelEntity" id="m_hotel">
+        <id property="id" column="hotel_id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="address" column="address"/>
+        <result property="prefecture" column="prefecture"/>
+        <result property="city" column="city"/>
+        <result property="otherParts" column="other_parts"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="hotelPicture" column="hotel_picture"/>
+        <result property="price" column="price"/>
+        <result property="registDate" column="regist_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <!--　マッピング定義（ユーザ） --><!--　マッピング定義（ホテル） -->
+    <resultMap type="com.example.Hotel.domain.auth.UserEntity" id="user">
+        <id property="id" column="user_id" />
+        <result property="name" column="name"/>
+        <result property="nameKana" column="name_kana"/>
+        <result property="password" column="password"/>
+        <result property="post" column="post"/>
+        <result property="address" column="address"/>
+        <result property="tel" column="tel"/>
+        <result property="mail" column="mail"/>
+        <result property="authority" column="authority"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO payment_info (
+            hotel_id,
+            user_id,
+            pay_date,
+            reserve_date_from,
+            reserve_date_to,
+            amount,
+            created_at,
+            guest_num,
+            status
+        ) VALUES (
+            #{hotel.id},
+            #{user.id},
+            CURRENT_TIMESTAMP,
+            #{reserveDateFrom},
+            #{reserveDateTo},
+            #{amount},
+            CURRENT_TIMESTAMP,
+            #{guestNum},
+            't'
+        );
+    </insert>
+
+
+
+    <select id="findPaymentInfo" resultMap = "pay">
+        select
+            *
+        from
+            payment_info p
+        LEFT OUTER JOIN hotel h ON p.hotel_id = h.id
+        LEFT OUTER JOIN users u ON p.user_id = u.id
+        where
+            user_id = #{userId}
+        and p.status = 't'
+    </select>
+
+    <select id="findReserveInfo" resultMap = "pay">
+        select
+            *
+        from
+            payment_info p
+        LEFT OUTER JOIN hotel h ON p.hotel_id = h.id
+        LEFT OUTER JOIN users u ON p.user_id = u.id
+        where
+            user_id = #{userId}
+        and p.status = 't'
+        and p.reserve_date_from >= CURRENT_DATE;
+    </select>
+
+    <update id="reserveCanecel">
+        update
+            payment_info
+        SET
+            status = "c"
+        WHERE
+            id = #{id}
+    </update>
+
+</mapper>
